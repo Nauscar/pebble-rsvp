@@ -1,0 +1,19 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "Kevin Nause",
+    "shortName": "RSVP",
+    "longName": "Rapid Serial Visual Presentation",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "uuid": "42a37433-e273-4b47-925d-e311f0eec3fb",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
