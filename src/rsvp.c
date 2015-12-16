@@ -120,15 +120,35 @@ static void prv_token_cb(void *data) {
     s_timer = app_timer_register(timeout_ms, prv_token_cb, NULL);
 }
 
-void rsvp(char *input, TextLayer *text_layer, bool center) {
+void rsvp_display(char *input) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Input received: %s", input);
-
-    s_text_layer = text_layer;
-    s_center = center;
     
     static char string[256];
     strncpy(string, input, sizeof(string));
 
     s_token = strtok(string, " ");
     prv_token_cb(NULL);
+}
+
+void rsvp_init(Layer *window_layer, bool center) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "RSVP layer initialized");
+    s_center = center;
+
+    const GRect bounds = layer_get_bounds(window_layer);
+    const uint32_t text_width = bounds.size.w;
+    const uint32_t text_height = 34;
+    s_text_layer = text_layer_create(GRect(0, bounds.size.h/2 - text_height/2,
+        text_width, text_height));
+    
+    // Set the text, font, and text alignment
+    text_layer_set_text(s_text_layer, "Press Select");
+    text_layer_set_font(s_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28));
+    text_layer_set_text_alignment(s_text_layer, GTextAlignmentCenter);
+
+    // Add the text layer to the window
+    layer_add_child(window_layer, text_layer_get_layer(s_text_layer));
+}
+
+void rsvp_deinit() {
+    text_layer_destroy(s_text_layer);
 }
